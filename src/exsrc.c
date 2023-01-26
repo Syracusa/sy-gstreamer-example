@@ -22,7 +22,7 @@ gst_ex_src_class_init(GstExSrcClass *klass)
 }
 
 static void
-gst_ex_src_init()
+gst_ex_src_init(GstExSrc *obj)
 {
 
 }
