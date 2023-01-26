@@ -1,0 +1,10 @@
+**
+
+!src/
+
+!*.c
+!*.h
+!meson.build
+!README.md
+!TODO.md
+!.gitignore
