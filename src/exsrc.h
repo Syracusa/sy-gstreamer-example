@@ -2,6 +2,7 @@
 #define EXSRC_H
 
 #include <gst/gst.h>
+#include <gst/base/gstpushsrc.h>
 
 /* Element object context */
 typedef struct _GstExSrc {
@@ -27,6 +28,6 @@ typedef struct _GstExSrcClass {
 /* Standard type returning function */
 GType gst_ex_src_get_type(void);
 
-GST_ELEMENT_REGISTER_DECLARE(ex_src)
+GST_ELEMENT_REGISTER_DECLARE(ex_src);
 
 #endif
