@@ -3,6 +3,7 @@
 !src/
 
 !devenv.sh
+!.editorconfig
 !*.c
 !*.h
 !meson.build

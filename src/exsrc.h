@@ -5,12 +5,17 @@
 #include <gst/base/gstpushsrc.h>
 
 /* Element object context */
-typedef struct _GstExSrc {
+typedef struct _GstExSrc
+{
   GstPushSrc parent;
+  guint16 byte_per_ms;
+  guint16 count;
+  gint64 last_poll; /* Last data poll(monotime in us) */
 } GstExSrc;
 
 /* Element class context */
-typedef struct _GstExSrcClass {
+typedef struct _GstExSrcClass
+{
   GstPushSrcClass parent_class;
 } GstExSrcClass;
 
@@ -28,7 +33,7 @@ typedef struct _GstExSrcClass {
 /* Standard type returning function */
 GType gst_ex_src_get_type(void);
 
-/* gstelement.h:139 
+/* gstelement.h:139
 Declare function with name "gst_element_register_ex_src()"
 */
 GST_ELEMENT_REGISTER_DECLARE(ex_src);

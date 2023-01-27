@@ -27,7 +27,8 @@ cdata.set_quoted('GST_PACKAGE_ORIGIN', 'N/A')
 configure_file(output : 'config.h', configuration : cdata)
 
 gstex_sources = [
-  'src/exsrc.c'
+  'src/exsrc.c',
+  'src/exsink.c'
   ]
 
 gstexplugin = library('gstex',
