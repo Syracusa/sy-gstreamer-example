@@ -2,6 +2,7 @@
 
 !src/
 
+!devenv.sh
 !*.c
 !*.h
 !meson.build

@@ -15,7 +15,7 @@ typedef struct _GstExSrcClass {
 } GstExSrcClass;
 
 /* Standard Macros */
-#define GST_TYPE_EX_SRC(gst_ex_src_get_type())
+#define GST_TYPE_EX_SRC (gst_ex_src_get_type())
 #define GST_EX_SRC(obj) \
   (G_TYPE_CHECK_INSTANCE_CAST((obj), GST_TYPE_EX_SRC, GstExSrc))
 #define GST_EX_SRC_CLASS(klass) \
@@ -28,6 +28,9 @@ typedef struct _GstExSrcClass {
 /* Standard type returning function */
 GType gst_ex_src_get_type(void);
 
+/* gstelement.h:139 
+Declare function with name "gst_element_register_ex_src()"
+*/
 GST_ELEMENT_REGISTER_DECLARE(ex_src);
 
 #endif

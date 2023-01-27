@@ -1,4 +1,4 @@
-project('gst-ex', 'c', version : '1.19.0.1', license : 'N/A')
+project('gst-ex', 'c', version : '0.0.1', license : 'N/A')
 
 plugins_install_dir = join_paths(get_option('libdir'), 'gstreamer-1.0')
 
@@ -27,13 +27,13 @@ cdata.set_quoted('GST_PACKAGE_ORIGIN', 'N/A')
 configure_file(output : 'config.h', configuration : cdata)
 
 gstex_sources = [
-  'src/gstplugin.c'
+  'src/exsrc.c'
   ]
 
 gstexplugin = library('gstex',
   gstex_sources,
   c_args: plugin_c_args,
-  dependencies : [gst_dep],
+  dependencies : [gst_dep, gstbase_dep],
   install : true,
   install_dir : plugins_install_dir,
 )
