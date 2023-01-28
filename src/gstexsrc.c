@@ -1,4 +1,4 @@
-#include "exsrc.h"
+#include "gstexsrc.h"
 
 G_DEFINE_TYPE(GstExSrc, gst_ex_src, GST_TYPE_ELEMENT);
 
@@ -36,6 +36,13 @@ gst_ex_src_class_init(GstExSrcClass *klass)
   gst_element_class_add_static_pad_template(gstelement_class, &src_template);
 
   gstpushsrc_class->fill = gst_ex_src_fill;
+
+
+  gst_element_class_set_static_metadata (gstelement_class,
+    "Basics source element example",
+    "N/A",
+    "N/A",
+    "N/A");
 }
 
 static void
@@ -45,6 +52,10 @@ gst_ex_src_init(GstExSrc *ex_src)
   ex_src->count = 0;
   ex_src->last_poll = g_get_monotonic_time();
   ex_src->byte_per_ms = 1;
+
+  ex_src->srcpad = gst_pad_new_from_static_template (
+    &src_template, "src");
+  gst_element_add_pad (GST_ELEMENT(ex_src), ex_src->srcpad);
 }
 
 static GstFlowReturn

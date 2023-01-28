@@ -8,6 +8,7 @@
 typedef struct _GstExSink
 {
   GstBaseSink parent;
+  GstPad *sinkpad;
 } GstExSink;
 
 /* Element class context */

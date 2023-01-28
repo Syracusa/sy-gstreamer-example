@@ -8,6 +8,7 @@
 typedef struct _GstExSrc
 {
   GstPushSrc parent;
+  GstPad *srcpad;
   guint16 byte_per_ms;
   guint16 count;
   gint64 last_poll; /* Last data poll(monotime in us) */

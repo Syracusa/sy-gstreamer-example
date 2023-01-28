@@ -1,1 +1,1 @@
-../gstreamer/gst-env.sh
+../gstreamer/gst-env.py
