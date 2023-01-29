@@ -10,8 +10,9 @@ plugin_init (GstPlugin * plugin)
 {
   gboolean ret = FALSE;
 
-  ret |= GST_ELEMENT_REGISTER (ex_sink, plugin);
   ret |= GST_ELEMENT_REGISTER (ex_src, plugin);
+  ret |= GST_ELEMENT_REGISTER (ex_filter, plugin);
+  ret |= GST_ELEMENT_REGISTER (ex_sink, plugin);
 
   return ret;
 }

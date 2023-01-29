@@ -28,6 +28,7 @@ configure_file(output : 'config.h', configuration : cdata)
 
 gstex_sources = [
   'src/gstexsrc.c',
+  'src/gstexfilter.c',
   'src/gstexsink.c',
   'src/gstex.c',
   'src/exvdbg.c'
