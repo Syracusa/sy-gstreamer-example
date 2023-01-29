@@ -2,7 +2,7 @@
 
 !src/
 
-!devenv.sh
+!*.sh
 !.editorconfig
 !*.c
 !*.h

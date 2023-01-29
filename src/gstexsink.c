@@ -1,6 +1,6 @@
 #include "gstexsink.h"
 
-G_DEFINE_TYPE(GstExSink, gst_ex_sink, GST_TYPE_ELEMENT);
+G_DEFINE_TYPE(GstExSink, gst_ex_sink, GST_TYPE_BASE_SINK);
 
 GST_ELEMENT_REGISTER_DEFINE(ex_sink, "ex-sink", GST_RANK_NONE, GST_TYPE_EX_SINK);
 
@@ -51,17 +51,21 @@ gst_ex_sink_render(GstBaseSink *bsink, GstBuffer *buffer)
   GstExSink *ex_sink = (GstExSink *)bsink;
 
   GstMapInfo info;
-  if (!gst_buffer_map(buffer, &info, GST_MAP_READWRITE))
+  if (!gst_buffer_map(buffer, &info, GST_MAP_READ))
   {
     GST_ERROR_OBJECT(ex_sink, "Can't mapping buffer\n");
     return GST_FLOW_ERROR;
   }
-
+\
+#if 0
   for (int i = 0; i < info.size; i++)
   {
     g_print("%x ", info.data[i]);
   }
   g_print("\n");
+#endif
+  g_print("%lu bytes recvd\n", info.size);
+  gst_buffer_unmap (buffer, &info);
 
   return GST_FLOW_OK;
 }

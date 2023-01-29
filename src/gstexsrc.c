@@ -1,6 +1,10 @@
-#include "gstexsrc.h"
 
-G_DEFINE_TYPE(GstExSrc, gst_ex_src, GST_TYPE_ELEMENT);
+#include "gstexsrc.h"
+#include "exvdbg.h"
+
+ExDbgConext *dctx;
+
+G_DEFINE_TYPE(GstExSrc, gst_ex_src, GST_TYPE_PUSH_SRC);
 
 #if 1
 /* Define function with name "gst_element_register_ex_src()" */
@@ -37,7 +41,6 @@ gst_ex_src_class_init(GstExSrcClass *klass)
 
   gstpushsrc_class->fill = gst_ex_src_fill;
 
-
   gst_element_class_set_static_metadata (gstelement_class,
     "Basics source element example",
     "N/A",
@@ -51,11 +54,20 @@ gst_ex_src_init(GstExSrc *ex_src)
   GST_LOG_OBJECT(ex_src, "gst_ex_src_init() called");
   ex_src->count = 0;
   ex_src->last_poll = g_get_monotonic_time();
-  ex_src->byte_per_ms = 1;
 
   ex_src->srcpad = gst_pad_new_from_static_template (
     &src_template, "src");
   gst_element_add_pad (GST_ELEMENT(ex_src), ex_src->srcpad);
+
+  /* configure basesrc to be a live source */
+  gst_base_src_set_live (GST_BASE_SRC(ex_src), TRUE);
+
+  /*========= vdbg init ========*/
+  dctx = exvdbg_new("exsrc");
+  exvdbg_streamlogbox_new(dctx, "log", 10, 200, 500, 500);
+  exvdbg_streamlog(dctx, "log", "vdbg init success!");
+  /*============================*/
+
 }
 
 static GstFlowReturn
@@ -63,7 +75,7 @@ gst_ex_src_fill(GstPushSrc *psrc, GstBuffer *outbuf)
 {
   GstExSrc *ex_src = (GstExSrc *)psrc;
   gint64 timediff = g_get_monotonic_time() - ex_src->last_poll;
-  gint64 available = timediff / (ex_src->byte_per_ms * 1000);
+  gint64 available = timediff;
 
   GstMapInfo info;
   if (!gst_buffer_map(outbuf, &info, GST_MAP_READWRITE))
@@ -90,7 +102,9 @@ gst_ex_src_fill(GstPushSrc *psrc, GstBuffer *outbuf)
     info.data[i] = 0xfa;
   }
   gst_buffer_resize(outbuf, 0, write_len);
-  ex_src->last_poll += write_len * (ex_src->byte_per_ms * 1000);
+  gst_buffer_unmap (outbuf, &info);
+
+  ex_src->last_poll += write_len;
   GST_LOG_OBJECT(ex_src, "%ld byte filled\n", write_len);
 
   return GST_FLOW_OK;
